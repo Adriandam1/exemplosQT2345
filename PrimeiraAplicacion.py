@@ -37,6 +37,11 @@ class PrimeiraFiestra (QMainWindow):
         #O mais simple que temos e os obxetos box:
         caixaV = QVBoxLayout()
 
+        #Creamos etiqueta:
+        self.lblSaudo = QLabel("Poder ter texto inicial")
+        #A engadimos a caixa:
+        caixaV.addWidget(self.lblSaudo)
+
         #Vamos a poñer primero un boton:
         btnSaudo = QPushButton("Saúdo")
 
@@ -46,11 +51,12 @@ class PrimeiraFiestra (QMainWindow):
         #Metemos o boton na caixa:
         caixaV.addWidget(btnSaudo)
 
+        '''
         #QLabel
         label = QLabel(self)
         label.setText("Primeira liña do QLabel\nSegunda liña do label")
         label.adjustSize() # hago que el label se ajuste al tamaño que requiere
-
+        '''
 
 
         # Caixa non é widget, é layout e eu necesito un widget polo que teño que facer a conversion
@@ -67,6 +73,8 @@ class PrimeiraFiestra (QMainWindow):
     #Vease __init__ vista e as funcions controlador VC vista controlador
     def on_btnSaudo_clicked(self):
         print("Ola usuarioaria")
+        self.lblSaudo.setText("Ola ola")
+
 
 
 
