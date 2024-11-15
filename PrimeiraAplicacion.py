@@ -6,7 +6,7 @@ from PyQt6.QtGui import QColor
 #QLabel: https://doc.qt.io/qtforpython-5/PySide2/QtWidgets/QLabel.html
 
 #A importacion de widgets va crecendo segun añadimos componentes
-from PyQt6.QtWidgets import (QMainWindow, QApplication, QVBoxLayout, QPushButton, QWidget, QLabel, QFrame)
+from PyQt6.QtWidgets import (QMainWindow, QApplication, QVBoxLayout, QPushButton, QWidget, QLabel, QFrame, QCheckBox)
 # QmainWindow seria la fiestra principal donde creariamos os obxetoc, teremos que engadir controles etc etc
 # Para poder interaccionar co sistema operativo tamen temos que utilizar QApplication
 
@@ -75,8 +75,23 @@ class PrimeiraFiestra (QMainWindow):
         print("Ola usuarioaria")
         self.lblSaudo.setText("Ola ola")
 
-
-
+###### editado reciente
+# Izo muchas conbinaciones de botones
+    def on_chkVerdello_clicked (self):
+        # primero cuando se pulsa, comprobar si el resto estan pulsados
+        # revisa en fiestraprincipal self.chkVerde,clicked.connect(self.on_chkVerde_clicked)
+        #                           self.chkVerde = QCheckBox("Verde")
+        # comprobamos si los otros estan checkeados comprobamos el valor(numero del color del indice)
+        if self.chkVerde.isChecked(): # si el verde esta checkeado la conbinacion da marron
+            self.stack.setCurrentIndex(8) # numero del indice del marron
+        elif self.chkAzul.isChecked(): # si el azul esta checkeado la conbionacion da violeta
+            self.stack.setCurrentIndex(6) # numero del indice del violeta
+        elif self.chkLaranxa.isChecked(): # si el laranza esta checkeado da vermeranza
+            self.stack.setCurrentIndex(9) #indice laranxa
+        """Verdello-verde marron
+           verdello-Azul violeta
+           verdello-laranxa vermeranxa"""
+#######
 
 
 
