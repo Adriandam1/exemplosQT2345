@@ -89,14 +89,15 @@ class FiestraPrincipal (QMainWindow):
         # setCurrentIndex da a opcion de ponerlle un indice
         cmbCores = QComboBox()
         cmbCores.addItems(("Vermello","Azul","Verde","Laranxa")) # pasamos como unha lista
-        cmbCores.setCurrentIndex(2) # poñemos o indice 2 que é o verde
+        cmbCores.setCurrentIndex(2) # poñemos o indice 2 que é o verde por defecto
         cmbCores.currentIndexChanged.connect(self.on_cmbCores_currentIndexChanged) #hayq eu implementar o metodo
-        #Traballar tamen cos cambios de texto
-        cmbCores.setEditable(True) # se o poñemos editable, facemos que lle podamos cambiar o texto, e engadir un novo elemento na lista
+        # Traballar tamen cos cambios de texto
+        # SetEditable por defecto e False, polo que a menos que queremos activalo non necesitamos indicalo
+        cmbCores.setEditable(False) # se o poñemos editable, facemos que lle podamos cambiar o texto, e engadir un novo elemento na lista
         caixaV.addWidget(cmbCores) # se non fago esto aparece en branco
-        #cando cambie o id do elemento selecionado, cuando selecione outro color poñer un sinal quie nos indica que cambia de id por que o que quero e cambiar o color de fondo, para que cando o usuario toque ahi, se desencadene todo e reaccionar
+        # cando cambie o id do elemento selecionado, cuando selecione outro color poñer un sinal quie nos indica que cambia de id por que o que quero e cambiar o color de fondo, para que cando o usuario toque ahi, se desencadene todo e reaccionar
 
-
+        # Revisar QListView: https://doc.qt.io/qtforpython-6/PySide6/QtWidgets/QListView.html
 
 
 
@@ -172,14 +173,15 @@ class FiestraPrincipal (QMainWindow):
     def on_cmbCores_currentIndexChanged (self, indice):
         #aqui seria o que seria o noso stack, asignarlle o indice podemos pasarllo directamente
         self.stack.setCurrentIndex(indice)
+        print("Cambiou o indice")
 
     #Poderia traballar co texto en lugar do indice, ambalas duas opcions serian validas, neste caso teriamos que especificar o color
-    def on_cmbCores_currentIndexChanged (self, texto):
+    def on_cmbCores_currentTextChanged (self, texto):
         if texto == "Azul":
             self.stack.setCurrentIndex(1)
 
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    fiestra = FiestraPrincipal()
+    fiestCambioura = FiestraPrincipal()
     app.exec()
