@@ -1,6 +1,7 @@
 from PyQt6 import QtGui
 from PyQt6.QtCore import QAbstractTableModel, Qt
 
+# paxina doc: https://doc.qt.io/qtforpython-5/PySide2/QtWidgets/QTableView.html
 
 class ModeloTaboa (QAbstractTableModel):
     def __init__(self, taboa = None):
@@ -14,7 +15,7 @@ class ModeloTaboa (QAbstractTableModel):
         return len (self.taboa[0]) if len (self.taboa) != 0 else 0
 
     def data (self, indice, rol):
-        if rol == Qt.ItemDataRole.DisplayRole:
+        if rol == Qt.ItemDataRole.DisplayRole or rol== Qt.ItemDataRole.EditRole:
             valor = self.taboa [indice.row()][indice.column()]
             return valor
         if rol == Qt.ItemDataRole.BackgroundRole:
@@ -34,3 +35,14 @@ class ModeloTaboa (QAbstractTableModel):
                 if self.taboa[indice.row()][indice.column()]:
                     return QtGui.QIcon ('tick.png')
 
+# temos que crear un novo metodo permitiranos facer un cambio na columna nome e columna vivo/morto
+# columna 1 = dni
+    def flags (self, indice):
+        if indice.column() == 1:
+            # si es la fila 1(dni) permitimos el item
+            # esto seria como has caracteristicas da celda
+            return Qt.ItemFlag.ItemIsEnabled
+            # si es el resto permitimos que sea editable selectable
+        return Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsEditable | Qt.ItemFlag.ItemIsSelectable
+        # Con esto las columnas que queramos seran editables ( Exemplo QTableView) pero de momento no le hemos dicho al view que lo mande a la base de datos
+        # por lo que los cambios no son efectivos, ahora tenemos que buscar cual es el evento que nos permite hacer ese tipo de cambios
