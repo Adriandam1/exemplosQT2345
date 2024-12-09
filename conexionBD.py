@@ -92,7 +92,7 @@ class ConexionBD:
             print("Erro facendo a consulta: " + str(e))
             return None
         else:
-            print("Consulta executada")
+            print("Consulta executada: " +str(consultaSQL))
             return listaConsulta
 
     def consultaConParametros(self, consultaSQL, *parametros):

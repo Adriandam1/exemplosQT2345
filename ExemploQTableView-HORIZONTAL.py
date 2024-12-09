@@ -73,7 +73,7 @@ class ExemploQTableViewHORIZONTAL(QMainWindow):
         # Creamos 2 botons novos, modificar Y borrar
         self.btnModificar = QPushButton("Modificar")
         self.btnBorrar = QPushButton("Borrar")
-
+        self.btnBorrar.clicked.connect(self.on_btnBorrar_clicked)
 
         self.btnAceptar = QPushButton ("Aceptar")
         self.btnAceptar.clicked.connect (self.on_btnAceptar_clicked)
@@ -160,6 +160,41 @@ class ExemploQTableViewHORIZONTAL(QMainWindow):
             self.txtDni.clear()
             self.cmbXenero.setCurrentIndex(-1)
             self.chkFalecido.setChecked(False)
+
+    def on_btnBorrar_clicked(self):
+        print("Botón Borrar clicado")
+        # Verificar si hay un índice seleccionado
+        indice = self.tvwTaboa.selectedIndexes()
+        if not indice:
+            print("No se ha seleccionado ningún elemento para borrar.")
+            return
+
+        # Obtener el índice de la fila seleccionada
+        fila = indice[0].row()
+
+        # Obtener el identificador o datos necesarios para borrar de la base de datos
+        dni_para_borrar = self.modelo.taboa[fila][1]  # Supongamos que el DNI es un identificador único
+
+        # Eliminar de la base de datos
+        bDatos = ConexionBD("usuarios.bd")
+        try:
+            bDatos.conectaBD()
+            bDatos.creaCursor()
+            bDatos.consultaConParametros("DELETE FROM usuarios WHERE dni = ?", dni_para_borrar)
+            bDatos.conexion.commit()
+        except Exception as e:
+            print(f"Error al borrar el registro de la base de datos: {e}")
+        finally:
+            bDatos.pechaBD()
+
+        # Eliminar el registro del modelo
+        del self.modelo.taboa[fila]
+        self.modelo.layoutChanged.emit()
+
+        # Limpiar campos de texto y restablecer estado de los controles
+        self.on_btnCancelar_clicked()
+
+        print(f"Registro con DNI {dni_para_borrar} borrado correctamente.")
 
     def on_btnAceptar_clicked(self):
         indice = self.tvwTaboa.selectedIndexes()
